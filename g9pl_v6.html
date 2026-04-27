@@ -1,0 +1,236 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@400;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#FDF6E3;--dark-green:#1A3C2B;--mid-green:#2E6B4F;--gold:#C8952A;--gold-light:#E8B84B;--red:#8B2020;--parchment:#F5E6C8;--text-dark:#1A1A0F;--text-mid:#3D3520}
+body{background:var(--cream);font-family:'Crimson Pro',Georgia,serif;color:var(--text-dark)}
+.header{background:var(--dark-green);padding:1.8rem 1.5rem 1.2rem;text-align:center;border-bottom:4px solid var(--gold);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(200,149,42,0.04) 10px,rgba(200,149,42,0.04) 20px)}
+.g9pl{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold-light);letter-spacing:6px;font-weight:900;line-height:1;position:relative}
+.header-sub{color:#9DC9B0;font-size:0.9rem;margin-top:0.3rem;letter-spacing:2px;position:relative}
+.tab-bar{display:flex;background:var(--dark-green);border-bottom:3px solid var(--gold)}
+.tab{flex:1;padding:0.7rem 0.3rem;text-align:center;color:#9DC9B0;font-family:'Playfair Display',serif;font-size:0.75rem;letter-spacing:0.5px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all 0.2s}
+.tab.active{color:var(--gold-light);border-bottom-color:var(--gold-light)}
+.tab:hover{color:var(--gold-light)}
+.panel{display:none;padding:1.4rem}
+.panel.active{display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark-green);border-bottom:2px solid var(--gold);padding-bottom:0.4rem;margin-bottom:1.2rem;letter-spacing:1px}
+
+.awards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:1.5rem}
+.award-card{background:#fff;border:1px solid #D4C9A8;border-radius:8px;overflow:hidden;border-top:4px solid var(--gold);padding-bottom:1rem}
+.award-icon{font-size:1.8rem;display:block;text-align:center;padding:0.9rem 1rem 0.3rem}
+.award-title{font-family:'Playfair Display',serif;font-size:0.76rem;color:#7A6F50;text-align:center;letter-spacing:1px;padding:0 0.8rem 0.5rem;text-transform:uppercase}
+.award-field{display:block;width:calc(100% - 1.6rem);margin:0 0.8rem 0.3rem;padding:0.4rem 0.6rem;border:1px solid #D4C9A8;border-radius:4px;font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:700;color:var(--dark-green);background:#FFFDF5;text-align:center}
+.award-field:focus{outline:none;border-color:var(--gold);background:#FFF8E8}
+.award-field.value{font-size:1.4rem;color:var(--gold);font-weight:900}
+.field-label{font-size:0.7rem;color:#9A8F6A;text-align:center;letter-spacing:0.5px;margin:0.4rem 0.8rem 0.2rem;font-family:'Playfair Display',serif}
+.save-bar{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem}
+.btn-save{background:var(--dark-green);color:var(--gold-light);border:none;padding:0.5rem 1.6rem;font-family:'Playfair Display',serif;font-size:0.88rem;letter-spacing:1px;cursor:pointer;border-radius:4px}
+.btn-save:hover{background:var(--mid-green)}
+.saved-msg{font-size:0.82rem;color:var(--mid-green);font-style:italic;opacity:0;transition:opacity 0.4s}
+.saved-msg.show{opacity:1}
+
+.seasons-list{display:flex;flex-direction:column;gap:0.8rem;margin-bottom:1.4rem}
+.season-card{background:#fff;border:1px solid #D4C9A8;border-radius:8px;border-left:5px solid var(--gold);padding:1rem 1.1rem;display:flex;align-items:center;gap:1rem}
+.season-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);min-width:2.5rem;text-align:center;line-height:1}
+.season-num-label{font-size:0.65rem;color:#9A8F6A;letter-spacing:1px;text-align:center;font-family:'Playfair Display',serif}
+.season-divider{width:1px;background:#D4C9A8;align-self:stretch}
+.season-fields{flex:1;display:flex;flex-direction:column;gap:0.4rem}
+.season-field-row{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+.sf-wrap label{display:block;font-size:0.68rem;color:#9A8F6A;margin-bottom:0.15rem;font-family:'Playfair Display',serif;letter-spacing:0.5px}
+.sf-wrap input{width:100%;padding:0.35rem 0.55rem;border:1px solid #D4C9A8;border-radius:4px;font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;color:var(--dark-green);background:#FFFDF5}
+.sf-wrap input:focus{outline:none;border-color:var(--gold);background:#FFF8E8}
+.season-delete{background:none;border:none;color:#C0A888;cursor:pointer;font-size:0.9rem;align-self:flex-start;padding:0 2px}
+.season-delete:hover{color:var(--red)}
+.add-season-btn{display:flex;align-items:center;justify-content:center;gap:0.5rem;width:100%;padding:0.7rem;border:2px dashed #C8B47A;border-radius:8px;background:transparent;font-family:'Playfair Display',serif;font-size:0.88rem;color:var(--gold);cursor:pointer;letter-spacing:1px}
+.add-season-btn:hover{background:var(--parchment)}
+
+/* Players tab */
+.players-list{display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.4rem}
+.player-card{background:#fff;border:1px solid #D4C9A8;border-radius:8px;padding:0.85rem 1rem;display:flex;align-items:center;gap:1rem}
+.player-avatar{width:40px;height:40px;border-radius:50%;background:var(--dark-green);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold-light);flex-shrink:0}
+.player-info{flex:1;display:grid;grid-template-columns:1fr auto;gap:0.5rem;align-items:center}
+.player-name-input{padding:0.35rem 0.55rem;border:1px solid #D4C9A8;border-radius:4px;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--dark-green);background:#FFFDF5;width:100%}
+.player-name-input:focus{outline:none;border-color:var(--gold);background:#FFF8E8}
+.wins-wrap{display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
+.wins-wrap label{font-size:0.7rem;color:#9A8F6A;font-family:'Playfair Display',serif;white-space:nowrap}
+.wins-input{width:52px;padding:0.35rem 0.4rem;border:1px solid #D4C9A8;border-radius:4px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--gold);background:#FFFDF5;text-align:center}
+.wins-input:focus{outline:none;border-color:var(--gold);background:#FFF8E8}
+.player-delete{background:none;border:none;color:#C0A888;cursor:pointer;font-size:0.85rem;padding:2px 4px;flex-shrink:0}
+.player-delete:hover{color:var(--red)}
+.add-player-btn{display:flex;align-items:center;justify-content:center;gap:0.5rem;width:100%;padding:0.7rem;border:2px dashed #C8B47A;border-radius:8px;background:transparent;font-family:'Playfair Display',serif;font-size:0.88rem;color:var(--gold);cursor:pointer;letter-spacing:1px}
+.add-player-btn:hover{background:var(--parchment)}
+.no-data{text-align:center;color:#9A8F6A;font-style:italic;padding:1.5rem}
+</style>
+
+<div class="header">
+  <div class="g9pl">G9PL</div>
+  <div class="header-sub">Hand Cricket Premier League &nbsp;·&nbsp; All-Time Honours</div>
+</div>
+<div class="tab-bar">
+  <div class="tab active" onclick="showTab('honours')">Honours</div>
+  <div class="tab" onclick="showTab('seasons')">G9PL(X)</div>
+  <div class="tab" onclick="showTab('players')">Players</div>
+</div>
+
+<!-- HONOURS -->
+<div id="honours" class="panel active">
+  <div class="section-title">All-Time Awards</div>
+  <div class="awards-grid">
+    <div class="award-card">
+      <span class="award-icon">🏆</span>
+      <div class="award-title">Highest Team Score</div>
+      <div class="field-label">Team / Players</div>
+      <input class="award-field" id="a1-holder" placeholder="Team or player name">
+      <div class="field-label">Score</div>
+      <input class="award-field value" id="a1-value" placeholder="e.g. 87">
+    </div>
+    <div class="award-card">
+      <span class="award-icon">🏏</span>
+      <div class="award-title">Highest Individual Score</div>
+      <div class="field-label">Player Name</div>
+      <input class="award-field" id="a2-holder" placeholder="Player name">
+      <div class="field-label">Score</div>
+      <input class="award-field value" id="a2-value" placeholder="e.g. 54">
+    </div>
+    <div class="award-card">
+      <span class="award-icon">🔥</span>
+      <div class="award-title">Longest Unbeaten Streak</div>
+      <div class="field-label">Team / Players</div>
+      <input class="award-field" id="a3-holder" placeholder="Team or player name">
+      <div class="field-label">Wins in a row</div>
+      <input class="award-field value" id="a3-value" placeholder="e.g. 7">
+    </div>
+    <div class="award-card">
+      <span class="award-icon">👑</span>
+      <div class="award-title">Most Wins All-Time (Team)</div>
+      <div class="field-label">Team Name</div>
+      <input class="award-field" id="a4-holder" placeholder="Team name">
+      <div class="field-label">Total Wins</div>
+      <input class="award-field value" id="a4-value" placeholder="e.g. 12">
+    </div>
+    <div class="award-card">
+      <span class="award-icon">⭐</span>
+      <div class="award-title">Most Wins All-Time (Player)</div>
+      <div class="field-label">Player Name</div>
+      <input class="award-field" id="a5-holder" placeholder="Player name">
+      <div class="field-label">Total Wins</div>
+      <input class="award-field value" id="a5-value" placeholder="e.g. 8">
+    </div>
+  </div>
+  <div class="save-bar">
+    <button class="btn-save" onclick="saveAwards()">Save Awards</button>
+    <span class="saved-msg" id="saved-msg">Saved ✓</span>
+  </div>
+</div>
+
+<!-- G9PL(X) -->
+<div id="seasons" class="panel">
+  <div class="section-title">Season Winners</div>
+  <div class="seasons-list" id="seasons-list"></div>
+  <button class="add-season-btn" onclick="addSeason()">+ Add Season</button>
+  <div class="save-bar" style="margin-top:1rem">
+    <button class="btn-save" onclick="saveSeasons()">Save</button>
+    <span class="saved-msg" id="saved-msg-s">Saved ✓</span>
+  </div>
+</div>
+
+<!-- PLAYERS -->
+<div id="players" class="panel">
+  <div class="section-title">Player Records</div>
+  <div class="players-list" id="players-list"></div>
+  <button class="add-player-btn" onclick="addPlayer()">+ Add Player</button>
+  <div class="save-bar" style="margin-top:1rem">
+    <button class="btn-save" onclick="savePlayers()">Save</button>
+    <span class="saved-msg" id="saved-msg-p">Saved ✓</span>
+  </div>
+</div>
+
+<script>
+let awards = JSON.parse(localStorage.getItem('g9pl_a')||'{}');
+let seasons = JSON.parse(localStorage.getItem('g9pl_s')||'[]');
+let players = JSON.parse(localStorage.getItem('g9pl_p')||'[]');
+
+function saveAll(){
+  localStorage.setItem('g9pl_a',JSON.stringify(awards));
+  localStorage.setItem('g9pl_s',JSON.stringify(seasons));
+  localStorage.setItem('g9pl_p',JSON.stringify(players));
+}
+function flash(id){const m=document.getElementById(id);m.classList.add('show');setTimeout(()=>m.classList.remove('show'),2000)}
+function showTab(t){
+  document.querySelectorAll('.tab').forEach((e,i)=>e.classList.toggle('active',['honours','seasons','players'][i]===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===t));
+}
+
+// AWARDS
+function loadAwards(){
+  ['a1','a2','a3','a4','a5'].forEach(k=>['holder','value'].forEach(f=>{
+    const el=document.getElementById(`${k}-${f}`);
+    if(el&&awards[`${k}-${f}`])el.value=awards[`${k}-${f}`];
+  }));
+}
+function saveAwards(){
+  ['a1','a2','a3','a4','a5'].forEach(k=>['holder','value'].forEach(f=>{
+    const el=document.getElementById(`${k}-${f}`);
+    if(el)awards[`${k}-${f}`]=el.value;
+  }));
+  saveAll();flash('saved-msg');
+}
+
+// SEASONS
+function addSeason(){seasons.push({id:Date.now(),winner:'',runnerUp:''});saveAll();renderSeasons()}
+function removeSeason(id){if(!confirm('Remove this season?'))return;seasons=seasons.filter(s=>s.id!==id);saveAll();renderSeasons()}
+function saveSeasons(){
+  document.querySelectorAll('.season-card').forEach((card,i)=>{
+    if(seasons[i]){seasons[i].winner=card.querySelector('.w-input').value;seasons[i].runnerUp=card.querySelector('.ru-input').value}
+  });
+  saveAll();flash('saved-msg-s');
+}
+function renderSeasons(){
+  const list=document.getElementById('seasons-list');
+  if(!seasons.length){list.innerHTML='<div class="no-data">No seasons yet — add one below</div>';return}
+  list.innerHTML=seasons.map((s,i)=>`
+    <div class="season-card">
+      <div><div class="season-num">${i+1}</div><div class="season-num-label">SEASON</div></div>
+      <div class="season-divider"></div>
+      <div class="season-fields">
+        <div class="season-field-row">
+          <div class="sf-wrap"><label>🏆 Winners</label><input class="w-input" value="${s.winner}" placeholder="Winning team / players"></div>
+          <div class="sf-wrap"><label>🥈 Runners-up</label><input class="ru-input" value="${s.runnerUp}" placeholder="Runner-up team / players"></div>
+        </div>
+      </div>
+      <button class="season-delete" onclick="removeSeason(${s.id})">✕</button>
+    </div>`).join('');
+}
+
+// PLAYERS
+function addPlayer(){players.push({id:Date.now(),name:'',seasonWins:0});saveAll();renderPlayers()}
+function removePlayer(id){if(!confirm('Remove this player?'))return;players=players.filter(p=>p.id!==id);saveAll();renderPlayers()}
+function savePlayers(){
+  document.querySelectorAll('.player-card').forEach((card,i)=>{
+    if(players[i]){players[i].name=card.querySelector('.player-name-input').value;players[i].seasonWins=parseInt(card.querySelector('.wins-input').value)||0}
+  });
+  saveAll();flash('saved-msg-p');
+}
+function getInitials(name){if(!name.trim())return '?';const parts=name.trim().split(' ');return parts.length>=2?(parts[0][0]+parts[parts.length-1][0]).toUpperCase():name.slice(0,2).toUpperCase()}
+function renderPlayers(){
+  const list=document.getElementById('players-list');
+  if(!players.length){list.innerHTML='<div class="no-data">No players yet — add one below</div>';return}
+  const sorted=[...players].map((p,i)=>({...p,_i:i})).sort((a,b)=>b.seasonWins-a.seasonWins);
+  list.innerHTML=sorted.map(p=>`
+    <div class="player-card">
+      <div class="player-avatar">${getInitials(p.name)}</div>
+      <div class="player-info">
+        <input class="player-name-input" value="${p.name}" placeholder="Player name" oninput="updateAvatar(this)">
+        <div class="wins-wrap">
+          <label>Seasons won</label>
+          <input class="wins-input" type="number" min="0" value="${p.seasonWins}" placeholder="0">
+        </div>
+      </div>
+      <button class="player-delete" onclick="removePlayer(${p.id})">✕</button>
+    </div>`).join('');
+}
+function updateAvatar(input){const card=input.closest('.player-card');const avatar=card.querySelector('.player-avatar');avatar.textContent=getInitials(input.value)}
+
+loadAwards();renderSeasons();renderPlayers();
+</script>
